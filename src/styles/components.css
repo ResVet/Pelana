@@ -1,0 +1,679 @@
+/* Pelana. Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved. */
+
+@layer components {
+  /* Buttons */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.875rem;
+    padding: 0 1.15rem;
+    border-radius: var(--r-control);
+    background: var(--c-surface);
+    color: var(--c-ink);
+    box-shadow: inset 0 0 0 1px var(--c-line);
+    font-size: var(--step--1);
+    font-weight: 640;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color var(--dur-2) var(--ease-out),
+      box-shadow var(--dur-2) var(--ease-out),
+      transform var(--dur-1) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn:hover {
+    background: var(--c-surface-2);
+  }
+
+  .btn:active {
+    transform: translateY(1px) scale(0.985);
+  }
+
+  .btn .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    flex: none;
+  }
+
+  .btn--solid {
+    background: var(--c-water-fill);
+    color: var(--c-on-fill);
+    box-shadow: none;
+  }
+
+  .btn--solid:hover {
+    background: var(--c-water-fill);
+    background: color-mix(in srgb, var(--c-water-fill) 86%, var(--c-ink));
+  }
+
+  .btn--water {
+    background: var(--c-surface);
+    background: color-mix(in srgb, var(--c-water-fill) 12%, var(--c-surface));
+    box-shadow: inset 0 0 0 1.5px var(--c-water);
+    color: var(--c-ink);
+  }
+
+  .btn--alert {
+    background: var(--c-blood-fill);
+    color: var(--c-on-fill);
+    box-shadow: none;
+  }
+
+  .btn--alert:hover {
+    background: var(--c-blood-fill);
+    background: color-mix(in srgb, var(--c-blood-fill) 86%, var(--c-ink));
+  }
+
+  .btn--quiet {
+    background: transparent;
+    box-shadow: none;
+    color: var(--c-ink-2);
+    padding-inline: 0.6rem;
+  }
+
+  .btn--quiet:hover {
+    background: var(--c-surface-2);
+    color: var(--c-ink);
+  }
+
+  .btn[disabled],
+  .btn[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .textlink {
+    font-weight: 640;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding: 0 0.95rem;
+    border-radius: 999px;
+    color: var(--c-ink);
+    font-size: var(--step--1);
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px var(--c-line);
+    transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+  }
+
+  .chip:hover {
+    background: var(--c-surface-2);
+  }
+
+  .chip[aria-pressed='true'] {
+    background: var(--c-ink);
+    color: var(--c-bg);
+    box-shadow: none;
+  }
+
+  /* Segmented control built from radio buttons. */
+
+  .seg {
+    display: grid;
+    gap: var(--sp-2);
+  }
+
+  .seg__legend {
+    font-size: var(--step--1);
+    font-weight: 640;
+    margin-bottom: var(--sp-2);
+  }
+
+  .seg__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 3px;
+    border-radius: calc(var(--r-control) + 3px);
+    background: var(--c-surface-2);
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .seg__option {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .seg__option input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .seg__option span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding: 0 0.95rem;
+    border-radius: var(--r-control);
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--c-ink-2);
+    transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+  }
+
+  .seg__option input:checked + span {
+    background: var(--c-surface);
+    color: var(--c-ink);
+    box-shadow: 0 1px 0 rgb(15 44 50 / 0.06), 0 1px 3px rgb(15 44 50 / 0.12), inset 0 0 0 1px var(--c-ink-3);
+  }
+
+  .seg__option input:focus-visible + span {
+    outline: 2.5px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .seg__note {
+    color: var(--c-ink-3);
+    font-size: var(--step--1);
+  }
+
+  /* Form fields */
+
+  .form {
+    display: grid;
+    gap: var(--sp-5);
+  }
+
+  .form__set {
+    display: grid;
+    gap: var(--sp-5);
+  }
+
+  .form__legend {
+    font-size: var(--step-2);
+    font-weight: var(--weight-head);
+    letter-spacing: -0.025em;
+    margin-bottom: var(--sp-4);
+  }
+
+  .form__row {
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  @media (min-width: 36rem) {
+    .form__row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form__row--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .field {
+    display: grid;
+    gap: var(--sp-2);
+    align-content: start;
+  }
+
+  .field__label {
+    font-size: var(--step--1);
+    font-weight: 640;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+
+  .field__output {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: var(--c-water);
+  }
+
+  .field__hint {
+    color: var(--c-ink-3);
+    font-size: var(--step--1);
+  }
+
+  .field__error {
+    display: flex;
+    gap: 0.5rem;
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: var(--r-control);
+    background: var(--c-blood-wash);
+    color: var(--c-blood);
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+
+  .input {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: var(--r-control);
+    border: 1px solid var(--c-line);
+    background: var(--c-surface);
+    color: var(--c-ink);
+    font-size: max(16px, var(--step-0));
+    transition: border-color var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+  }
+
+  .input::placeholder {
+    color: var(--c-ink-3);
+    opacity: 1;
+  }
+
+  .input:hover {
+    border-color: var(--c-ink-2);
+  }
+
+  .input:focus-visible {
+    outline: none;
+    border-color: var(--c-focus);
+    box-shadow: 0 0 0 3px var(--c-line);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-water) 30%, transparent);
+  }
+
+  .input[aria-invalid='true'] {
+    border-color: var(--c-blood);
+  }
+
+  select.input {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 1.25rem) 52%, calc(100% - 0.9rem) 52%;
+    background-size: 0.36rem 0.36rem, 0.36rem 0.36rem;
+    background-repeat: no-repeat;
+  }
+
+  .check {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-weight: 560;
+    cursor: pointer;
+  }
+
+  .check input,
+  .alert__check input,
+  .spotlist__check input {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin: 0.15rem 0 0;
+    flex: none;
+    accent-color: var(--c-water-fill);
+  }
+
+  /* Range slider: a grout-lined track with a tile thumb. */
+
+  .range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2.5rem;
+    background: transparent;
+    cursor: pointer;
+    touch-action: pan-y;
+  }
+
+  .range::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--c-water-fill) var(--fill, 0%), var(--c-grout) var(--fill, 0%));
+  }
+
+  .range::-moz-range-track {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--c-grout);
+  }
+
+  .range::-moz-range-progress {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--c-water-fill);
+  }
+
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-top: calc(3px - 0.8rem);
+    border-radius: 6px;
+    background: var(--c-surface);
+    border: 2px solid var(--c-ink);
+    box-shadow: 0 2px 6px rgb(15 44 50 / 0.25);
+    transition: transform var(--dur-2) var(--ease-spring);
+  }
+
+  .range::-moz-range-thumb {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 6px;
+    background: var(--c-surface);
+    border: 2px solid var(--c-ink);
+    box-shadow: 0 2px 6px rgb(15 44 50 / 0.25);
+  }
+
+  .range:active::-webkit-slider-thumb {
+    transform: scale(1.12);
+  }
+
+  .range:focus-visible {
+    outline: none;
+  }
+
+  .range:focus-visible::-webkit-slider-thumb {
+    outline: 2.5px solid var(--c-focus);
+    outline-offset: 3px;
+  }
+
+  .range:focus-visible::-moz-range-thumb {
+    outline: 2.5px solid var(--c-focus);
+    outline-offset: 3px;
+  }
+
+  /* Panels: the main surface for tools. */
+
+  .panel {
+    position: relative;
+    padding: clamp(1.25rem, 0.9rem + 1.5vw, 2rem);
+    border-radius: var(--r-panel);
+    background: var(--c-surface);
+    border: 1px solid var(--c-grout);
+    border: 1px solid color-mix(in srgb, var(--c-grout) 80%, transparent);
+  }
+
+  .panel__title {
+    font-size: var(--step-2);
+    margin-bottom: var(--sp-4);
+  }
+
+  .panel > p + p {
+    margin-top: var(--sp-3);
+  }
+
+  .panel__note {
+    margin-top: var(--sp-4);
+    color: var(--c-ink-3);
+    font-size: var(--step--1);
+  }
+
+  /* Warning signs */
+
+  .alert {
+    border-radius: var(--r-panel);
+    background: var(--c-surface);
+    border: 1.5px solid var(--c-blood);
+    overflow: hidden;
+  }
+
+  .alert__head {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: var(--sp-4) clamp(1rem, 0.8rem + 1vw, 1.5rem);
+    background: var(--c-blood-fill);
+    color: var(--c-on-fill);
+  }
+
+  .alert__head .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex: none;
+  }
+
+  .alert__title {
+    font-size: var(--step-1);
+    color: inherit;
+    line-height: 1.25;
+  }
+
+  .alert__list {
+    display: grid;
+    gap: 0;
+    padding: var(--sp-2) clamp(1rem, 0.8rem + 1vw, 1.5rem);
+  }
+
+  .alert__list li {
+    position: relative;
+    padding: 0.7rem 0 0.7rem 1.6rem;
+    border-bottom: 1px solid var(--c-grout);
+    font-weight: 560;
+  }
+
+  .alert__list li:last-child {
+    border-bottom: 0;
+  }
+
+  .alert__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 2px;
+    background: var(--c-blood);
+  }
+
+  [data-alert='checklist'] .alert__list li {
+    padding-left: 0;
+  }
+
+  [data-alert='checklist'] .alert__list li::before {
+    content: none;
+  }
+
+  .alert__check {
+    display: flex;
+    gap: 0.75rem;
+    cursor: pointer;
+  }
+
+  .alert__check input {
+    accent-color: var(--c-blood-fill);
+  }
+
+  .alert__action {
+    margin: 0 clamp(1rem, 0.8rem + 1vw, 1.5rem) var(--sp-5);
+    padding: var(--sp-4);
+    border-radius: var(--r-control);
+    background: var(--c-blood-wash);
+    color: var(--c-ink);
+    font-weight: 640;
+  }
+
+  .alert[data-triggered] .alert__action {
+    background: var(--c-blood-fill);
+    color: var(--c-on-fill);
+    animation: pulse-in var(--dur-4) var(--ease-spring);
+  }
+
+  @keyframes pulse-in {
+    from {
+      transform: scale(0.96);
+    }
+  }
+
+  /* Lists with tile bullets */
+
+  .tilelist {
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  .tilelist li {
+    position: relative;
+    padding-left: 1.4rem;
+  }
+
+  .tilelist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 2px;
+    background: var(--c-water);
+  }
+
+  .note {
+    display: grid;
+    gap: var(--sp-4);
+    padding: clamp(1.25rem, 0.9rem + 1.5vw, 2rem);
+    border-radius: var(--r-panel);
+    background: var(--c-surface);
+    border: 1px solid var(--c-grout);
+    border: 1px solid color-mix(in srgb, var(--c-grout) 80%, transparent);
+  }
+
+  .note h2,
+  .note h3 {
+    font-size: var(--step-1);
+  }
+
+  .note__foot {
+    color: var(--c-ink-3);
+    font-size: var(--step--1);
+  }
+
+  /* Data tables and their toggles */
+
+  .datatable {
+    margin-top: var(--sp-4);
+  }
+
+  .datatable > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    font-weight: 640;
+    font-size: var(--step--1);
+    color: var(--c-water);
+  }
+
+  .datatable__scroll {
+    overflow-x: auto;
+    margin-top: var(--sp-3);
+    border-radius: var(--r-control);
+    border: 1px solid var(--c-grout);
+  }
+
+  .datatable table,
+  .paramtable {
+    width: 100%;
+    font-size: var(--step--1);
+  }
+
+  .datatable caption {
+    text-align: left;
+    padding: var(--sp-3) var(--sp-4);
+    color: var(--c-ink-2);
+  }
+
+  .datatable th,
+  .datatable td,
+  .paramtable th,
+  .paramtable td {
+    padding: 0.55rem var(--sp-4);
+    text-align: left;
+    border-top: 1px solid var(--c-grout);
+    vertical-align: top;
+  }
+
+  .datatable thead th,
+  .paramtable thead th {
+    font-weight: 700;
+    background: var(--c-surface-2);
+  }
+
+  .datatable tbody th,
+  .paramtable tbody th {
+    font-weight: 560;
+  }
+
+  .toast {
+    min-height: 1.5em;
+    color: var(--c-water);
+    font-weight: 640;
+    font-size: var(--step--1);
+  }
+
+  .actionchip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-size: var(--step--2);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    background: var(--c-surface-2);
+    color: var(--c-ink-2);
+    white-space: nowrap;
+  }
+
+  .actionchip[data-action='drain'] {
+    color: var(--c-water);
+  }
+
+  .actionchip[data-action='cover'] {
+    color: var(--c-ink);
+  }
+
+  .actionchip[data-action='recycle'] {
+    color: var(--c-blood);
+  }
+
+  .key {
+    display: inline-block;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 2px;
+    vertical-align: -0.05em;
+    margin-right: 0.4rem;
+  }
+
+  .section-title {
+    font-size: var(--step-3);
+    font-weight: var(--weight-display);
+    letter-spacing: -0.035em;
+    max-width: 20ch;
+  }
+
+  .section-lede {
+    margin-top: var(--sp-4);
+    max-width: var(--measure);
+    color: var(--c-ink-2);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  /* Forced colour modes (Windows contrast themes) drop backgrounds and
+     shadows, which is how buttons, chips and segments show their edges and
+     their state. There, edges become real borders and the chosen option is
+     drawn in the system highlight colour. */
+  @media (forced-colors: active) {
+    .btn,
+    .chip,
+    .seg__option span {
+      border: 1px solid ButtonText;
+    }
+
+    .chip[aria-pressed='true'],
+    .seg__option input:checked + span {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+      border-color: Highlight;
+    }
+  }
+}

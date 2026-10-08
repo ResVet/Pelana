@@ -1,0 +1,257 @@
+/* Pelana. Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved. */
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    hanging-punctuation: first last;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd,
+  ol,
+  ul,
+  fieldset {
+    margin: 0;
+  }
+
+  ol[role='list'],
+  ul[role='list'] {
+    list-style: none;
+    padding: 0;
+  }
+
+  fieldset {
+    border: 0;
+    padding: 0;
+    min-inline-size: 0;
+  }
+
+  legend {
+    padding: 0;
+  }
+
+  img,
+  svg,
+  canvas,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: 0;
+    padding: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  dialog {
+    padding: 0;
+    border: 0;
+    color: inherit;
+  }
+
+  summary {
+    cursor: pointer;
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-size: var(--root-size, 100%);
+    background: var(--c-bg);
+    color: var(--c-ink);
+    scroll-padding-top: calc(var(--masthead) + var(--sp-5));
+    accent-color: var(--c-water);
+  }
+
+  body {
+    min-height: 100svh;
+    background: var(--c-bg);
+    color: var(--c-ink);
+    font-size: var(--step-0);
+    font-weight: var(--weight-text);
+    line-height: var(--leading-text);
+    font-kerning: normal;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: var(--weight-head);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+    color: var(--c-ink);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    letter-spacing: -0.035em;
+  }
+
+  h2 {
+    font-size: var(--step-3);
+    letter-spacing: -0.03em;
+  }
+
+  h3 {
+    font-size: var(--step-1);
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+
+  i,
+  em {
+    font-style: italic;
+  }
+
+  strong,
+  b {
+    font-weight: var(--weight-strong);
+  }
+
+  a {
+    color: var(--c-water);
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+    text-decoration-color: var(--c-surface-2);
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    transition: text-decoration-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+  }
+
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  abbr[title] {
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--c-focus);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::selection {
+    background: var(--c-plasma);
+    color: #0f2c32;
+  }
+
+  main {
+    display: block;
+  }
+
+  main:focus {
+    outline: none;
+  }
+
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+
+  math {
+    font-size: 1.05em;
+    font-family: 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', math;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root:not([data-motion='full']) *,
+    :root:not([data-motion='full']) *::before,
+    :root:not([data-motion='full']) *::after {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  :root[data-motion='reduced'] *,
+  :root[data-motion='reduced'] *::before,
+  :root[data-motion='reduced'] *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}
+
+@layer utilities {
+  .vh {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .nw {
+    white-space: nowrap;
+  }
+
+  .wrap {
+    width: min(100% - 2 * var(--gutter), var(--wrap));
+    margin-inline: auto;
+  }
+}

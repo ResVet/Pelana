@@ -1,0 +1,999 @@
+/* Pelana. Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved. */
+
+@layer pages {
+  .toolpage {
+    container-type: inline-size;
+  }
+
+  /* Count the days */
+
+  .tracker {
+    display: grid;
+    gap: var(--sp-5);
+    align-items: start;
+  }
+
+  .tracker__main,
+  .tracker__side {
+    display: grid;
+    gap: var(--sp-5);
+    min-width: 0;
+  }
+
+  @media (min-width: 62rem) {
+    .tracker {
+      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+      gap: var(--sp-6);
+    }
+  }
+
+  .people {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2) var(--sp-3);
+  }
+
+  .people__label {
+    font-size: var(--step--1);
+    font-weight: 700;
+  }
+
+  .people__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+
+  .result {
+    display: grid;
+    gap: var(--sp-5);
+    border-color: var(--c-ink);
+  }
+
+  .result[data-phase='critical'] {
+    border-color: var(--ph-critical);
+    box-shadow: inset 0 4px 0 var(--ph-critical);
+  }
+
+  .result__top {
+    display: grid;
+    gap: var(--sp-2);
+  }
+
+  .result__count {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+  }
+
+  .result__mosaic {
+    height: clamp(4rem, 3rem + 4vw, 6rem);
+    width: auto;
+    flex: none;
+  }
+
+  .result__title {
+    font-size: var(--step-3);
+    font-weight: var(--weight-display);
+    letter-spacing: -0.035em;
+  }
+
+  .result__title:focus {
+    outline: none;
+  }
+
+  .result__since {
+    color: var(--c-ink-2);
+    font-size: var(--step--1);
+  }
+
+  .phasebox {
+    display: grid;
+    gap: var(--sp-2);
+    padding: var(--sp-4);
+    border-radius: var(--r-control);
+    background: var(--c-surface-2);
+  }
+
+  .result[data-phase='critical'] .phasebox {
+    background: var(--c-plasma-wash);
+  }
+
+  .phasebox__title {
+    font-size: var(--step-1);
+  }
+
+  .daystrip__label {
+    font-size: var(--step--1);
+    font-weight: 700;
+    margin-bottom: var(--sp-2);
+  }
+
+  .daystrip__list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    list-style: none;
+    padding: 0;
+  }
+
+  @container (min-width: 34rem) {
+    .daystrip__list {
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+    }
+  }
+
+  .daystrip__day {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.5rem 0.35rem;
+    border-radius: var(--r-tile);
+    background: var(--c-surface-2);
+    text-align: center;
+    font-size: var(--step--2);
+    line-height: 1.25;
+    color: var(--c-ink-2);
+  }
+
+  .daystrip__day strong {
+    font-size: var(--step-0);
+    font-weight: 800;
+    color: var(--c-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .daystrip__day[data-critical] {
+    background: var(--c-plasma-wash);
+    box-shadow: inset 0 0 0 1px var(--c-plasma);
+  }
+
+  .daystrip__day[data-today] {
+    background: var(--c-ink);
+    color: var(--c-bg);
+    box-shadow: none;
+  }
+
+  .daystrip__day[data-today] strong {
+    color: var(--c-bg);
+  }
+
+  /* Days already gone: outlined instead of filled, and the number struck
+     through, so they read as past without fading the text below 4.5:1. */
+  .daystrip__day[data-past] {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--c-grout);
+    color: var(--c-ink-3);
+  }
+
+  .daystrip__day[data-past] strong {
+    color: var(--c-ink-3);
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .result__window {
+    font-weight: 700;
+  }
+
+  .phaselist {
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  .phaselist__item {
+    display: grid;
+    gap: var(--sp-2);
+    padding-left: var(--sp-4);
+    border-left: 4px solid var(--item-phase, var(--c-grout));
+  }
+
+  .phaselist__item[data-phase='fever'] { --item-phase: var(--ph-fever); }
+  .phaselist__item[data-phase='critical'] { --item-phase: var(--ph-critical); }
+  .phaselist__item[data-phase='recovery'] { --item-phase: var(--ph-recovery); }
+
+  .phaselist__days {
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--c-ink-2);
+  }
+
+  .phaselist__item h3 {
+    font-size: var(--step-1);
+  }
+
+  .loglist {
+    display: grid;
+    gap: 0;
+    margin-top: var(--sp-4);
+  }
+
+  .loglist__item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--sp-1) var(--sp-4);
+    align-items: baseline;
+    padding: var(--sp-3) 0;
+    border-bottom: 1px solid var(--c-grout);
+  }
+
+  .loglist__temp {
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    font-size: var(--step-1);
+  }
+
+  .loglist__temp[data-high] {
+    color: var(--c-blood);
+  }
+
+  .loglist__meta {
+    color: var(--c-ink-2);
+    font-size: var(--step--1);
+  }
+
+  .loglist__empty {
+    margin-top: var(--sp-3);
+    color: var(--c-ink-3);
+  }
+
+  .tempchart {
+    margin-top: var(--sp-5);
+  }
+
+  .tempchart__title {
+    font-size: var(--step--1);
+    font-weight: 700;
+    margin-bottom: var(--sp-2);
+  }
+
+  .tempchart__plot svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .export__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+  }
+
+  .export__hint {
+    margin-top: var(--sp-3);
+    color: var(--c-ink-3);
+    font-size: var(--step--1);
+  }
+
+  .privacy p {
+    margin-bottom: var(--sp-3);
+    color: var(--c-ink-2);
+  }
+
+  .tracker__side .panel__title {
+    font-size: var(--step-1);
+  }
+
+  .tracker .form__set > .btn {
+    justify-self: start;
+    min-width: 12rem;
+  }
+
+  @media (max-width: 35.99rem) {
+    .tracker .form__set > .btn {
+      justify-self: stretch;
+    }
+  }
+
+  /* Which test, which day */
+
+  .testing {
+    display: grid;
+    gap: var(--sp-5);
+    max-width: 64rem;
+  }
+
+  /* Grid items may shrink below their content; wide tables scroll inside. */
+  .testing > *,
+  .controls > * {
+    min-width: 0;
+  }
+
+  .controls {
+    display: grid;
+    gap: var(--sp-5);
+  }
+
+  @container (min-width: 46rem) {
+    .testing .controls {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      align-items: end;
+    }
+  }
+
+  .testgrid__title {
+    font-weight: 700;
+    font-size: var(--step-1);
+  }
+
+  .testgrid__key {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem var(--sp-4);
+    margin: var(--sp-2) 0 var(--sp-4);
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+  }
+
+  .testgrid__swatch {
+    width: 1.6rem;
+    height: 0.8rem;
+    border-radius: 2px;
+    margin-right: -0.4rem;
+    background: var(--c-ink-2);
+  }
+
+  .testgrid__swatch[data-s='1'] {
+    background: var(--c-grout);
+    background: color-mix(in srgb, var(--c-ink-2) 28%, transparent);
+    box-shadow: inset 0 0 0 1.5px var(--c-ink-2);
+  }
+
+  .testgrid__scroll {
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--sp-2));
+    padding-inline: var(--sp-2);
+  }
+
+  .testgrid__table {
+    width: 100%;
+    min-width: 34rem;
+    table-layout: fixed;
+  }
+
+  .testgrid__table th,
+  .testgrid__table td {
+    padding: 0;
+    height: 2.75rem;
+  }
+
+  .testgrid__table thead th {
+    height: 2rem;
+    font-size: var(--step--2);
+    font-weight: 700;
+    color: var(--c-ink-3);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .testgrid__corner {
+    width: 5.5rem;
+  }
+
+  .testgrid__table tbody th {
+    text-align: left;
+    font-size: var(--step--1);
+    font-weight: 700;
+    padding-right: var(--sp-3);
+    white-space: nowrap;
+  }
+
+  .testgrid__table tbody tr {
+    --bar: var(--ph-virus);
+  }
+
+  .testgrid__table tbody tr[data-test='igm'],
+  .testgrid__table tbody tr[data-test='igg'] {
+    --bar: var(--s-hct);
+  }
+
+  .testgrid__table tbody tr[data-test='cbc'] {
+    --bar: var(--c-ink-3);
+  }
+
+  .testgrid__table td {
+    position: relative;
+  }
+
+  .testgrid__table td::before {
+    content: '';
+    position: absolute;
+    inset: 0.65rem 0;
+    background: transparent;
+  }
+
+  .testgrid__table td[data-s='2']::before {
+    background: var(--bar);
+  }
+
+  .testgrid__table td[data-s='1']::before {
+    background: var(--c-surface-2);
+    background: color-mix(in srgb, var(--bar) 26%, transparent);
+    box-shadow: inset 0 1.5px 0 var(--bar), inset 0 -1.5px 0 var(--bar);
+  }
+
+  .testgrid__table td[data-s='1'][data-run-start]::before {
+    box-shadow: inset 0 1.5px 0 var(--bar), inset 0 -1.5px 0 var(--bar), inset 1.5px 0 0 var(--bar);
+  }
+
+  .testgrid__table td[data-s='1'][data-run-end]::before {
+    box-shadow: inset 0 1.5px 0 var(--bar), inset 0 -1.5px 0 var(--bar), inset -1.5px 0 0 var(--bar);
+  }
+
+  .testgrid__table td[data-s='1'][data-run-start][data-run-end]::before {
+    box-shadow: inset 0 0 0 1.5px var(--bar);
+  }
+
+  .testgrid__table td[data-run-start]::before {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    left: 2px;
+  }
+
+  .testgrid__table td[data-run-end]::before {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    right: 2px;
+  }
+
+  .testgrid__table [aria-current='true'] {
+    background: var(--c-surface-2);
+    background: color-mix(in srgb, var(--c-water-fill) 14%, transparent);
+  }
+
+  .testgrid__table thead th[aria-current='true'] {
+    color: var(--c-ink);
+    border-radius: var(--r-tile) var(--r-tile) 0 0;
+  }
+
+  .testgrid__axis {
+    margin-top: var(--sp-2);
+    text-align: right;
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+  }
+
+  .advice .tilelist {
+    margin-top: var(--sp-4);
+  }
+
+  .testing__note {
+    color: var(--c-ink-3);
+    font-size: var(--step--1);
+    max-width: var(--measure);
+  }
+
+  /* House check */
+
+  .house {
+    display: grid;
+    gap: var(--sp-5);
+    align-items: start;
+  }
+
+  .house__stage {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    max-height: 78svh;
+    width: 100%;
+    border-radius: var(--r-panel);
+    overflow: hidden;
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-grout);
+  }
+
+  /* Side by side on wide screens, with the house staying in view while the
+     list scrolls. This comes after the base rule so sticky wins. */
+  @media (min-width: 62rem) {
+    .house {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    }
+
+    .house__stage {
+      position: sticky;
+      top: calc(var(--masthead) + var(--sp-4));
+    }
+
+    .reminder {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .house__fallback {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--c-grout) 1px, transparent 1px),
+      linear-gradient(90deg, var(--c-grout) 1px, transparent 1px);
+    background-size: 2rem 2rem;
+    transition: opacity var(--dur-4) var(--ease-out);
+  }
+
+  .house__stage[data-gl-ready] .house__fallback {
+    opacity: 0;
+  }
+
+  .house__gl {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    opacity: 0;
+    transition: opacity var(--dur-4) var(--ease-out);
+  }
+
+  .house__stage[data-gl-ready] .house__gl {
+    opacity: 1;
+  }
+
+  .house__hotspots {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hotspot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: -0.8rem 0 0 -0.8rem;
+    border-radius: 999px;
+    pointer-events: auto;
+    display: grid;
+    place-items: center;
+    background: var(--c-surface);
+    color: var(--c-ink);
+    box-shadow: 0 0 0 2px var(--c-ink), 0 6px 16px -6px rgb(15 44 50 / 0.6);
+    transition: transform var(--dur-3) var(--ease-spring), background-color var(--dur-2) var(--ease-out), opacity var(--dur-2) var(--ease-out);
+  }
+
+  .hotspot::after {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 2px;
+    background: var(--c-blood);
+  }
+
+  .hotspot[data-done] {
+    background: var(--c-water-fill);
+    box-shadow: 0 0 0 2px var(--c-surface), 0 6px 16px -6px rgb(15 44 50 / 0.6);
+  }
+
+  .hotspot[data-done]::after {
+    width: 0.7rem;
+    height: 0.4rem;
+    border-radius: 0;
+    background: none;
+    border-left: 2.5px solid var(--c-on-fill);
+    border-bottom: 2.5px solid var(--c-on-fill);
+    transform: translateY(-2px) rotate(-45deg);
+  }
+
+  .hotspot[aria-pressed='true'] {
+    transform: scale(1.18);
+  }
+
+  .hotspot[data-hidden] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .house__hint {
+    position: absolute;
+    left: var(--sp-4);
+    bottom: var(--sp-3);
+    font-size: var(--step--2);
+    font-weight: 600;
+    color: var(--c-ink-2);
+    background: rgb(var(--c-scrim) / 0.9);
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem;
+    pointer-events: none;
+  }
+
+  .no-js .house__hint {
+    display: none;
+  }
+
+  /* Turning by button as well as by dragging. Both only mean something
+     once the 3D house is running. */
+  .house__turn {
+    position: absolute;
+    right: var(--sp-3);
+    bottom: var(--sp-3);
+    display: flex;
+    gap: var(--sp-2);
+  }
+
+  .house__turn .iconbtn {
+    background: rgb(var(--c-scrim) / 0.9);
+    box-shadow: inset 0 0 0 1px var(--c-line);
+  }
+
+  .house__stage:not([data-gl-ready]) .house__turn,
+  .house__stage:not([data-gl-ready]) .house__hint {
+    display: none;
+  }
+
+  .house__panel {
+    display: grid;
+    gap: var(--sp-5);
+    min-width: 0;
+  }
+
+  .house__progress {
+    font-weight: 700;
+    font-size: var(--step-1);
+  }
+
+  .spotcard {
+    display: grid;
+    gap: var(--sp-3);
+    justify-items: start;
+    border-color: var(--c-ink);
+  }
+
+  .spotcard__room {
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--c-ink-3);
+  }
+
+  .spotcard__name {
+    font-size: var(--step-2);
+  }
+
+  .spotcard__name:focus {
+    outline: none;
+  }
+
+  .spots__title {
+    font-size: var(--step-2);
+    margin-bottom: var(--sp-2);
+  }
+
+  .spots__room + .spots__room {
+    margin-top: var(--sp-4);
+  }
+
+  .spots__roomname {
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--c-ink-3);
+    padding-bottom: var(--sp-2);
+    border-bottom: 1px solid var(--c-grout);
+  }
+
+  .spotlist__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 var(--sp-3);
+    padding: var(--sp-3) 0;
+    border-bottom: 1px solid var(--c-grout);
+  }
+
+  .spotlist__check {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 0.2rem;
+    cursor: pointer;
+  }
+
+  .spotlist__open {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.6rem;
+    text-align: left;
+    font-weight: 640;
+    color: var(--c-ink);
+    border-radius: var(--r-tile);
+  }
+
+  .spotlist__open:hover .spotlist__name {
+    text-decoration: underline;
+  }
+
+  .spotlist__text {
+    grid-column: 2;
+    margin-top: 0.2rem;
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+  }
+
+  .js .spotlist__text {
+    display: none;
+  }
+
+  .spotlist__item[data-done] .spotlist__name {
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+    color: var(--c-ink-3);
+  }
+
+  .spotlist__item[aria-current='true'] {
+    background: linear-gradient(90deg, var(--c-surface-2), transparent);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--c-water-fill) 10%, transparent), transparent);
+  }
+
+  .reminder__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+  }
+
+  /* Outbreak */
+
+  .outbreak {
+    display: grid;
+    gap: var(--sp-5);
+    align-items: start;
+  }
+
+  @media (min-width: 62rem) {
+    .outbreak {
+      grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1.6fr);
+    }
+
+    /* The controls stay in view beside the charts. On a short screen they
+       scroll inside their own panel, so none of them is ever out of reach. */
+    .outbreak__controls {
+      position: sticky;
+      top: calc(var(--masthead) + var(--sp-4));
+      max-height: calc(100svh - var(--masthead) - var(--sp-4) * 2);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+  }
+
+  .model {
+    margin-top: var(--sp-6);
+  }
+
+  .outbreak__controls {
+    display: grid;
+    gap: var(--sp-5);
+  }
+
+  .outbreak__controls .panel__title {
+    margin-bottom: 0;
+  }
+
+  .presets {
+    display: grid;
+    gap: var(--sp-2);
+  }
+
+  .presets__label {
+    font-size: var(--step--1);
+    font-weight: 700;
+  }
+
+  .presets__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+
+  .fogrow {
+    display: grid;
+    gap: var(--sp-2);
+    justify-items: start;
+  }
+
+  .fogrow .btn {
+    box-shadow: inset 0 0 0 1px var(--c-line);
+  }
+
+  .fogrow__done {
+    font-size: var(--step--1);
+    font-weight: 640;
+    color: var(--c-ink-2);
+  }
+
+  .outbreak__results {
+    display: grid;
+    gap: var(--sp-5);
+    min-width: 0;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--sp-3);
+  }
+
+  .stat {
+    display: grid;
+    align-content: start;
+    gap: var(--sp-1);
+    padding: var(--sp-4);
+    border-radius: var(--r-panel);
+    background: var(--c-surface);
+    border: 1px solid var(--c-grout);
+    border: 1px solid color-mix(in srgb, var(--c-grout) 80%, transparent);
+  }
+
+  .stat dt {
+    font-size: var(--step--1);
+    font-weight: 640;
+    color: var(--c-ink-2);
+  }
+
+  .stat dd {
+    font-size: var(--step-3);
+    font-weight: 780;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .stat dd[data-alarm] {
+    color: var(--c-blood);
+  }
+
+  .stat__hint {
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+  }
+
+  .epichart__title,
+  .city__title {
+    font-weight: 700;
+  }
+
+  .epichart__legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem var(--sp-4);
+    margin: var(--sp-2) 0 var(--sp-3);
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+  }
+
+  .key--current {
+    background: var(--s-temp);
+    height: 3px;
+    width: 1.2rem;
+  }
+
+  .key--baseline {
+    background: var(--c-ink-3);
+    height: 2px;
+    width: 1.2rem;
+  }
+
+  .epichart__plot {
+    position: relative;
+    min-height: 12rem;
+  }
+
+  .epichart__plot svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  .epichart__axis {
+    margin-top: var(--sp-1);
+    text-align: right;
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+  }
+
+  .chart-tip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--r-control);
+    background: var(--c-ink);
+    color: var(--c-bg);
+    font-size: var(--step--2);
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity var(--dur-1) var(--ease-out);
+  }
+
+  .chart-tip[data-on] {
+    opacity: 1;
+  }
+
+  .city__title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--sp-2);
+  }
+
+  .city__day {
+    font-weight: 600;
+    color: var(--c-ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .city__canvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 40 / 25;
+    margin-top: var(--sp-3);
+    border-radius: var(--r-tile);
+  }
+
+  .city__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-4);
+    margin-top: var(--sp-3);
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+  }
+
+  .city__legend .key[data-state='susceptible'] { background: var(--st-s); }
+  .city__legend .key[data-state='exposed'] { background: var(--st-e); }
+  .city__legend .key[data-state='infectious'] { background: var(--st-i); }
+  .city__legend .key[data-state='recovered'] { background: var(--st-r); }
+  .city__legend .key[data-state='protected'] { background: var(--st-p); }
+
+  .city__counts {
+    margin-top: var(--sp-2);
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .city__play {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-top: var(--sp-3);
+  }
+
+  .model {
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  .model > p {
+    max-width: 48rem;
+  }
+
+  .model__eq summary {
+    font-weight: 640;
+    color: var(--c-water);
+    min-height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .equations {
+    margin-top: var(--sp-3);
+    overflow-x: auto;
+    padding: var(--sp-4);
+    border-radius: var(--r-control);
+    background: var(--c-surface-2);
+  }
+
+  .model__limits {
+    color: var(--c-ink-2);
+    padding-left: var(--sp-4);
+    border-left: 3px solid var(--c-plasma);
+  }
+
+  .paramtable td:nth-child(2) {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .paramtable td:nth-child(3) {
+    color: var(--c-ink-2);
+  }
+}

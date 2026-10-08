@@ -1,0 +1,379 @@
+PELANA LICENCE
+Version 1.0, 8 October 2026
+
+Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved.
+
+The English text comes first and the Indonesian text second. If the two
+differ, the Indonesian text prevails.
+
+
+1. Definitions
+
+"Author" means Raffa Gamadan Rifandi (github.com/ResVet), who created the
+Work and owns every right in it.
+
+"Work" means everything in this repository and everything built or
+published from it, in whole or in part, in any form and any medium,
+wherever it is hosted. This includes the source code and the compiled,
+bundled or minified code; the shaders and the code that generates the 3D
+models; the text in Indonesian and in English; the design, layout, colours,
+choice of type, motion and interaction design; the illustrations, icons,
+images, screenshots and social preview images; the name "Pelana" and its
+logo; the selection and arrangement of facts and sources; and the tests and
+documentation.
+
+"You" means any person or organisation that receives, views or uses the
+Work.
+
+
+2. Ownership
+
+The Author owns the copyright, the moral rights and all other intellectual
+property rights in the Work. This licence transfers no ownership and waives
+none of those rights. Every right not expressly granted in section 3 is
+reserved.
+
+
+3. What you may do
+
+You may, without asking:
+
+(a) read the website in a web browser for your own personal, non-commercial
+    use, and print or save single pages for that use, keeping every notice;
+
+(b) view and fork this repository on GitHub, only as far as GitHub's Terms
+    of Service require of a public repository. A fork is a copy that stays
+    on GitHub. It gives no right to use, run, modify, build, deploy, host or
+    distribute the Work anywhere else;
+
+(c) link to the website or to the repository;
+
+(d) quote short extracts of the text for news reporting, criticism, review,
+    research or teaching, with the Author's name and a link to the source,
+    as far as the law allows such use without permission (in Indonesia,
+    Article 44 of Law No. 28 of 2014 on Copyright).
+
+Nothing else is permitted.
+
+
+4. What you may not do
+
+Unless the Author has given you permission in writing, you may not, in
+whole or in part, directly or indirectly:
+
+(a) copy or reproduce the Work, except as section 3 allows;
+
+(b) modify, adapt, translate, port, remix or build on the Work, or make any
+    derivative work, including by reusing its code, shaders, models, text or
+    design in another project;
+
+(c) deploy, host, mirror, proxy, frame or serve the Work, or anything
+    derived from it, on any domain, server, network, app or platform,
+    including Netlify, Vercel, Cloudflare Pages, GitHub Pages and app stores;
+
+(d) distribute, publish, sublicense, sell, rent, lend, share or otherwise
+    make the Work available to anyone;
+
+(e) use the Work for any commercial purpose;
+
+(f) use the Work to train, fine-tune or improve any machine learning or
+    artificial intelligence model, or put it in any dataset. Search engines
+    and answer engines may read the public pages only to show them, with a
+    link and credit to the Author, in reply to a person's search or
+    question;
+
+(g) remove, change or hide any copyright notice, licence notice, author
+    credit or metadata in the Work;
+
+(h) use the name "Pelana", its logo or the Author's name to endorse or
+    promote anything, or to suggest any connection with you or with
+    anything of yours;
+
+(i) present the Work, or any part of it, as your own.
+
+
+5. The only licence
+
+This licence is the only licence for the Work. No other licence, whether
+open source, free, Creative Commons or of any other kind, applies to any
+part of it, whatever a file, page, header, metadata field, tag, badge,
+template, package manifest, repository setting, platform default or
+third-party service may say or suggest. Any such statement that conflicts
+with this licence, including one added by a hosting service or a tool,
+gives you no rights and is overridden by this licence.
+
+Permission counts only if it is written, signed by the Author and specific,
+and it covers only what it describes. Silence, delay or a failure to
+enforce this licence is never permission.
+
+
+6. Material from others
+
+The typeface Plus Jakarta Sans, Copyright 2020 The Plus Jakarta Sans
+Project Authors, is used under the SIL Open Font License 1.1. The font
+files keep that licence, which ships as assets/fonts/OFL.txt on the
+published site and as fonts-src/OFL.txt in this repository. This licence
+does not limit any right the SIL Open Font License gives you in those font
+files, and that licence gives no rights in any other part of the Work. The
+NOTICE file lists the public-domain material the code relies on.
+
+
+7. Not medical advice
+
+The Work is for general education. It is not medical advice, diagnosis or
+treatment, and it does not replace a doctor or a health service. If you
+think you or someone else has dengue, see a health worker. In an emergency
+in Indonesia, go to the nearest emergency department (IGD) or call 119.
+
+
+8. No warranty
+
+The Work is provided "as is" and "as available", without warranty of any
+kind, express or implied, including warranties of accuracy, completeness,
+fitness for a particular purpose, merchantability, non-infringement, and
+uninterrupted or error-free operation. You use the Work at your own risk.
+
+
+9. Limitation of liability
+
+To the fullest extent the law allows, the Author is not liable for any
+damage, loss, injury, claim or cost of any kind arising from or connected
+with the Work or its use, including any decision about health made on the
+basis of it.
+
+
+10. End of permission
+
+If you break any term of this licence, every permission you had under it
+ends at once and without notice, and you must stop using the Work and
+delete every copy you control. Sections 2, 4, 5 and 7 to 13 continue to
+apply after that.
+
+
+11. Enforcement
+
+Infringing the Author's rights may lead to civil claims for damages and to
+criminal sanctions under the Copyright Law of the Republic of Indonesia
+(Law No. 28 of 2014), and under the laws of other countries that protect
+works through the Berne Convention and other treaties.
+
+
+12. Governing law and courts
+
+This licence is governed by the laws of the Republic of Indonesia. Disputes
+are decided by the competent Commercial Court (Pengadilan Niaga) in
+Indonesia, without limiting the Author's right to bring proceedings in any
+other court that has jurisdiction.
+
+
+13. General
+
+If any part of this licence cannot be enforced, the rest stays in force,
+and that part applies as far as the law allows. The Author may publish a
+new version of this licence; it applies from its publication to anyone who
+uses the Work after that.
+
+To ask for permission, open an issue at github.com/ResVet/pelana or contact
+the Author through github.com/ResVet.
+
+
+------------------------------------------------------------------------------
+
+
+LISENSI PELANA
+Versi 1.0, 8 Oktober 2026
+
+Hak Cipta (c) 2026 Raffa Gamadan Rifandi. Seluruh hak dilindungi
+undang-undang.
+
+Teks berbahasa Inggris tercantum lebih dahulu dan teks berbahasa Indonesia
+sesudahnya. Jika keduanya berbeda, yang berlaku adalah teks berbahasa
+Indonesia.
+
+
+1. Definisi
+
+"Pencipta" adalah Raffa Gamadan Rifandi (github.com/ResVet), yang
+menciptakan Karya dan memegang seluruh hak atasnya.
+
+"Karya" adalah seluruh isi repositori ini dan segala sesuatu yang dibangun
+atau diterbitkan darinya, baik seluruhnya maupun sebagian, dalam bentuk
+apa pun, melalui media apa pun, dan di mana pun ditempatkan. Termasuk di
+dalamnya: kode sumber serta kode hasil kompilasi, bundel, atau minifikasi;
+shader dan kode yang membentuk model 3D; teks dalam bahasa Indonesia dan
+bahasa Inggris; desain, tata letak, warna, pilihan huruf, serta desain
+gerak dan interaksi; ilustrasi, ikon, gambar, tangkapan layar, dan gambar
+pratinjau media sosial; nama "Pelana" dan logonya; pemilihan dan
+penyusunan fakta serta sumber; serta pengujian dan dokumentasinya.
+
+"Anda" adalah setiap orang atau organisasi yang menerima, melihat, atau
+menggunakan Karya.
+
+
+2. Kepemilikan
+
+Pencipta memegang hak cipta, hak moral, dan seluruh hak kekayaan
+intelektual lain atas Karya. Lisensi ini tidak mengalihkan kepemilikan dan
+tidak melepaskan satu pun dari hak tersebut. Setiap hak yang tidak
+diberikan secara tegas dalam pasal 3 tetap dilindungi.
+
+
+3. Yang boleh Anda lakukan
+
+Tanpa perlu meminta izin, Anda boleh:
+
+(a) membaca situs web melalui peramban untuk keperluan pribadi dan
+    nonkomersial, serta mencetak atau menyimpan halaman satu per satu untuk
+    keperluan itu, dengan seluruh pemberitahuan tetap utuh;
+
+(b) melihat dan membuat fork atas repositori ini di GitHub, sebatas yang
+    diwajibkan Ketentuan Layanan GitHub untuk repositori publik. Fork adalah
+    salinan yang tetap berada di GitHub dan tidak memberi hak untuk
+    menggunakan, menjalankan, mengubah, membangun, memasang (deploy),
+    menempatkan (host), atau mendistribusikan Karya di tempat lain;
+
+(c) menautkan ke situs web atau ke repositori;
+
+(d) mengutip bagian pendek dari teks untuk pemberitaan, kritik, tinjauan,
+    penelitian, atau pengajaran, dengan menyebutkan nama Pencipta dan
+    tautan ke sumbernya, sejauh penggunaan itu dibolehkan hukum tanpa izin
+    (di Indonesia, Pasal 44 Undang-Undang Nomor 28 Tahun 2014 tentang Hak
+    Cipta).
+
+Selain itu, tidak ada yang diizinkan.
+
+
+4. Yang tidak boleh Anda lakukan
+
+Kecuali Pencipta telah memberi izin tertulis, Anda tidak boleh, baik
+seluruhnya maupun sebagian, secara langsung maupun tidak langsung:
+
+(a) menyalin atau menggandakan Karya, kecuali sebagaimana dibolehkan
+    pasal 3;
+
+(b) mengubah, mengadaptasi, menerjemahkan, memindahkan ke platform lain,
+    menggubah ulang, atau mengembangkan Karya, atau membuat karya turunan
+    apa pun, termasuk dengan memakai ulang kode, shader, model, teks, atau
+    desainnya dalam proyek lain;
+
+(c) memasang (deploy), menempatkan (host), mencerminkan (mirror),
+    meneruskan melalui proxy, membingkai (frame), atau menyajikan Karya
+    atau apa pun yang diturunkan darinya di domain, server, jaringan,
+    aplikasi, atau platform mana pun, termasuk Netlify, Vercel, Cloudflare
+    Pages, GitHub Pages, dan toko aplikasi;
+
+(d) mendistribusikan, menerbitkan, mensublisensikan, menjual, menyewakan,
+    meminjamkan, membagikan, atau dengan cara lain menyediakan Karya bagi
+    siapa pun;
+
+(e) menggunakan Karya untuk tujuan komersial apa pun;
+
+(f) menggunakan Karya untuk melatih, menyempurnakan (fine-tune), atau
+    mengembangkan model pembelajaran mesin atau kecerdasan buatan apa pun,
+    atau memasukkannya ke dalam kumpulan data apa pun. Mesin pencari dan
+    mesin penjawab hanya boleh membaca halaman publik untuk menampilkannya,
+    dengan tautan dan nama Pencipta, sebagai tanggapan atas pencarian atau
+    pertanyaan seseorang;
+
+(g) menghapus, mengubah, atau menyembunyikan pemberitahuan hak cipta,
+    pemberitahuan lisensi, pencantuman nama Pencipta, atau metadata dalam
+    Karya;
+
+(h) menggunakan nama "Pelana", logonya, atau nama Pencipta untuk
+    mendukung atau mempromosikan apa pun, atau untuk mengesankan adanya
+    hubungan dengan Anda atau dengan apa pun milik Anda;
+
+(i) mengakui Karya, atau bagian mana pun darinya, sebagai milik Anda.
+
+
+5. Satu-satunya lisensi
+
+Lisensi ini adalah satu-satunya lisensi atas Karya. Tidak ada lisensi lain,
+baik sumber terbuka (open source), lisensi bebas, Creative Commons, maupun
+jenis apa pun, yang berlaku atas bagian mana pun dari Karya, apa pun yang
+dinyatakan atau disiratkan oleh berkas, halaman, header, kolom metadata,
+tag, lencana (badge), templat, manifes paket, pengaturan repositori,
+pengaturan bawaan platform, atau layanan pihak ketiga. Setiap pernyataan
+semacam itu yang bertentangan dengan lisensi ini, termasuk yang
+ditambahkan oleh layanan hosting atau perangkat lunak, tidak memberi Anda
+hak apa pun dan dikesampingkan oleh lisensi ini.
+
+Izin hanya sah jika tertulis, ditandatangani Pencipta, dan spesifik, dan
+izin itu hanya mencakup apa yang disebutkan di dalamnya. Diam, penundaan,
+atau tidak ditegakkannya lisensi ini tidak pernah berarti izin.
+
+
+6. Materi dari pihak lain
+
+Jenis huruf Plus Jakarta Sans, Hak Cipta 2020 The Plus Jakarta Sans
+Project Authors, digunakan berdasarkan SIL Open Font License 1.1. Berkas
+fon tersebut tetap tunduk pada lisensinya sendiri, yang disertakan sebagai
+assets/fonts/OFL.txt di situs yang diterbitkan dan sebagai fonts-src/OFL.txt
+di repositori ini. Lisensi ini tidak membatasi hak yang diberikan SIL Open
+Font License kepada Anda atas berkas fon tersebut, dan lisensi itu tidak
+memberi hak apa pun atas bagian lain dari Karya. Berkas NOTICE mencantumkan
+materi domain publik yang dipakai dalam kode.
+
+
+7. Bukan nasihat medis
+
+Karya ini untuk edukasi umum. Karya ini bukan nasihat, diagnosis, atau
+pengobatan medis, dan tidak menggantikan dokter atau layanan kesehatan.
+Jika Anda menduga Anda atau orang lain terkena demam berdarah dengue,
+temui tenaga kesehatan. Dalam keadaan darurat di Indonesia, datanglah ke
+instalasi gawat darurat (IGD) terdekat atau hubungi 119.
+
+
+8. Tanpa jaminan
+
+Karya disediakan "sebagaimana adanya" dan "sebagaimana tersedia", tanpa
+jaminan apa pun, baik tersurat maupun tersirat, termasuk jaminan atas
+ketepatan, kelengkapan, kesesuaian untuk tujuan tertentu, kelayakan untuk
+diperdagangkan, tidak adanya pelanggaran hak, serta pengoperasian yang
+tanpa gangguan atau tanpa kesalahan. Anda menggunakan Karya atas risiko
+Anda sendiri.
+
+
+9. Batasan tanggung jawab
+
+Sejauh diizinkan hukum, Pencipta tidak bertanggung jawab atas kerugian,
+kehilangan, cedera, tuntutan, atau biaya dalam bentuk apa pun yang timbul
+dari atau berkaitan dengan Karya atau penggunaannya, termasuk setiap
+keputusan kesehatan yang diambil berdasarkan Karya.
+
+
+10. Berakhirnya izin
+
+Jika Anda melanggar ketentuan mana pun dalam lisensi ini, seluruh izin
+yang Anda miliki berdasarkan lisensi ini langsung berakhir tanpa
+pemberitahuan, dan Anda wajib berhenti menggunakan Karya serta menghapus
+setiap salinan yang berada dalam kendali Anda. Pasal 2, 4, 5, dan 7 sampai
+dengan 13 tetap berlaku setelahnya.
+
+
+11. Penegakan
+
+Pelanggaran atas hak Pencipta dapat berujung pada gugatan ganti rugi
+secara perdata dan sanksi pidana berdasarkan Undang-Undang Hak Cipta
+Republik Indonesia (Undang-Undang Nomor 28 Tahun 2014), serta berdasarkan
+hukum negara lain yang melindungi ciptaan melalui Konvensi Bern dan
+perjanjian internasional lainnya.
+
+
+12. Hukum yang berlaku dan pengadilan
+
+Lisensi ini tunduk pada hukum Negara Republik Indonesia. Sengketa
+diselesaikan oleh Pengadilan Niaga yang berwenang di Indonesia, tanpa
+mengurangi hak Pencipta untuk mengajukan gugatan di pengadilan lain yang
+berwenang.
+
+
+13. Ketentuan umum
+
+Jika ada bagian dari lisensi ini yang tidak dapat ditegakkan, bagian
+lainnya tetap berlaku, dan bagian tersebut berlaku sejauh diizinkan hukum.
+Pencipta dapat menerbitkan versi baru lisensi ini; versi baru itu berlaku
+sejak diterbitkan bagi siapa pun yang menggunakan Karya setelahnya.
+
+Untuk meminta izin, buka issue di github.com/ResVet/pelana atau hubungi
+Pencipta melalui github.com/ResVet.

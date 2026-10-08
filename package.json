@@ -1,0 +1,28 @@
+{
+  "name": "pelana",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dengue, counted in days. A bilingual story and set of tools about dengue fever, by Raffa Gamadan Rifandi.",
+  "author": "Raffa Gamadan Rifandi",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/ResVet/pelana",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/dev.mjs",
+    "serve": "node scripts/serve.mjs",
+    "check": "tsc -p tsconfig.json",
+    "test": "node --test \"tests/**/*.test.ts\"",
+    "e2e": "node e2e/run.mjs",
+    "assets": "node scripts/assets.mjs",
+    "fonts": "PYTHONPATH=scripts/fonts/brotli_shim python3 scripts/fonts/build-fonts.py"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "esbuild": "0.28.2",
+    "typescript": "6.0.3"
+  }
+}
