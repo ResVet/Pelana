@@ -41,7 +41,7 @@ export interface PageSpec {
   path?: string;
 }
 
-const GITHUB = 'https://github.com/ResVet/pelana';
+const GITHUB = 'https://github.com/ResVet/Pelana';
 
 function absolute(assets: Assets, path: string): string {
   return assets.siteUrl.replace(/\/$/, '') + path;

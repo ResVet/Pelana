@@ -5,7 +5,7 @@
   "description": "Dengue, counted in days. A bilingual story and set of tools about dengue fever, by Raffa Gamadan Rifandi.",
   "author": "Raffa Gamadan Rifandi",
   "license": "SEE LICENSE IN LICENSE",
-  "homepage": "https://github.com/ResVet/pelana",
+  "homepage": "https://github.com/ResVet/Pelana",
   "type": "module",
   "engines": {
     "node": ">=22.18"
