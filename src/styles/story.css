@@ -1,0 +1,1245 @@
+/* Pelana. Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved.
+ *
+ * The story page. A sticky stage fills the viewport; the chapters scroll
+ * over it. Scrolling sets data-scene and the --day property on .story, and
+ * everything on the stage reacts to those two values.
+ */
+
+@layer pages {
+  .page-home .masthead {
+    position: fixed;
+    inset: 0 0 auto;
+  }
+
+  .story {
+    position: relative;
+    isolation: isolate;
+    --phase: var(--ph-egg);
+  }
+
+  .story[data-phase='water'] { --phase: var(--ph-water); }
+  .story[data-phase='adult'] { --phase: var(--ph-adult); }
+  .story[data-phase='virus'] { --phase: var(--ph-virus); }
+  .story[data-phase='incubation'] { --phase: var(--ph-incubation); }
+  .story[data-phase='fever'] { --phase: var(--ph-fever); }
+  .story[data-phase='critical'] { --phase: var(--ph-critical); }
+  .story[data-phase='recovery'] { --phase: var(--ph-recovery); }
+
+  /* Stage */
+
+  .stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100lvh;
+    overflow: hidden;
+    z-index: 0;
+    background: var(--c-bg);
+  }
+
+  .stage__gl {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity var(--dur-4) var(--ease-out);
+    touch-action: pan-y;
+  }
+
+  .stage[data-gl-ready] .stage__gl {
+    opacity: 1;
+  }
+
+  .stage__gl[data-grab] {
+    cursor: grab;
+  }
+
+  .stage__gl[data-grabbing] {
+    cursor: grabbing;
+  }
+
+  /* Without WebGL (or before it starts) the stage is drawn in CSS: a tiled
+     wall with a waterline across it. */
+  .stage__fallback {
+    position: absolute;
+    inset: 0;
+    background-color: var(--c-surface);
+    background-color: color-mix(in srgb, var(--c-surface) 88%, var(--c-water-fill));
+    background-image:
+      linear-gradient(var(--c-grout) 2px, transparent 2px),
+      linear-gradient(90deg, var(--c-grout) 2px, transparent 2px);
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--c-grout) 90%, var(--c-ink)) 2px, transparent 2px),
+      linear-gradient(90deg, color-mix(in srgb, var(--c-grout) 90%, var(--c-ink)) 2px, transparent 2px);
+    background-size: 7.5rem 7.5rem;
+    background-position: 60% 40%;
+    transition: opacity var(--dur-4) var(--ease-out);
+  }
+
+  .stage__water {
+    position: absolute;
+    inset: 58% 0 0;
+    background: linear-gradient(var(--c-water-fill), var(--c-water-fill));
+    background: linear-gradient(color-mix(in srgb, var(--c-water-fill) 55%, transparent), color-mix(in srgb, var(--c-water-fill) 85%, #061416));
+    border-top: 2px solid var(--c-surface);
+    border-top: 2px solid color-mix(in srgb, var(--c-surface) 70%, transparent);
+    mix-blend-mode: multiply;
+  }
+
+  :root[data-theme='dark'] .stage__water {
+    mix-blend-mode: normal;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .stage__water {
+      mix-blend-mode: normal;
+    }
+  }
+
+  .stage[data-gl-ready] .stage__fallback {
+    opacity: 0;
+  }
+
+  .stage__scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgb(var(--c-scrim) / 0) 40%, rgb(var(--c-scrim) / 0.82) 100%);
+  }
+
+  /* On wide screens the veil follows the text column, which ends at the
+     same place whatever the window width, so the end of every line still
+     sits on enough of it. */
+  @media (min-width: 64rem) {
+    .stage__scrim {
+      --text-end: calc(max(var(--gutter), 6vw) + 31rem);
+      background:
+        linear-gradient(90deg, rgb(var(--c-scrim) / 0.94) 0, rgb(var(--c-scrim) / 0.82) calc(var(--text-end) * 0.55), rgb(var(--c-scrim) / 0.45) var(--text-end), rgb(var(--c-scrim) / 0) calc(var(--text-end) + 14vw)),
+        linear-gradient(180deg, rgb(var(--c-scrim) / 0.5) 0%, rgb(var(--c-scrim) / 0) 18%);
+    }
+  }
+
+  /* Day counter: mosaic numerals with a plain-text twin. */
+
+  .counter {
+    position: absolute;
+    top: calc(var(--masthead) + var(--sp-4));
+    right: var(--gutter);
+    display: grid;
+    justify-items: end;
+    gap: 0.35rem;
+    text-align: right;
+    pointer-events: none;
+  }
+
+  .counter__label {
+    font-size: var(--step--1);
+    font-weight: 640;
+    color: var(--c-ink-2);
+  }
+
+  .counter__value {
+    position: relative;
+    height: clamp(3.4rem, 2rem + 6vw, 7.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .counter__mosaic {
+    height: 100%;
+    width: auto;
+  }
+
+  .counter__text {
+    font-size: clamp(3rem, 1.8rem + 5.6vw, 7rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    color: var(--phase);
+  }
+
+  .counter[data-mosaic-ready] .counter__text {
+    display: none;
+  }
+
+  .counter__phase {
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--c-ink);
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: var(--c-surface);
+    background: color-mix(in srgb, var(--phase) 18%, var(--c-surface));
+    transition: background-color var(--dur-3) var(--ease-out);
+  }
+
+  /* The rail: forty tiles, one per day. */
+
+  .dayrail {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    top: calc(var(--masthead) + 0.15rem);
+    display: flex;
+    gap: 2px;
+    pointer-events: none;
+  }
+
+  .dayrail__seg {
+    display: contents;
+  }
+
+  .dayrail__seg + .dayrail__seg > .dayrail__tile:first-child {
+    margin-left: 3px;
+  }
+
+  .dayrail__tile {
+    flex: 1 1 0;
+    height: 5px;
+    border-radius: 1px;
+    background: var(--c-grout);
+    background: color-mix(in srgb, var(--c-grout) 70%, transparent);
+    transition: background-color var(--dur-2) var(--ease-out), transform var(--dur-3) var(--ease-spring);
+  }
+
+  .dayrail__tile[data-on] {
+    background: var(--tile, var(--c-ink));
+  }
+
+  .dayrail__tile[data-current] {
+    transform: scaleY(1.9);
+  }
+
+  .dayrail__tile[data-phase='egg'] { --tile: var(--ph-egg); }
+  .dayrail__tile[data-phase='water'] { --tile: var(--ph-water); }
+  .dayrail__tile[data-phase='adult'] { --tile: var(--ph-adult); }
+  .dayrail__tile[data-phase='virus'] { --tile: var(--ph-virus); }
+  .dayrail__tile[data-phase='incubation'] { --tile: var(--ph-incubation); }
+  .dayrail__tile[data-phase='fever'] { --tile: var(--ph-fever); }
+  .dayrail__tile[data-phase='critical'] { --tile: var(--ph-critical); }
+  .dayrail__tile[data-phase='recovery'] { --tile: var(--ph-recovery); }
+
+  @media (min-width: 64rem) {
+    .dayrail {
+      top: auto;
+      bottom: var(--sp-5);
+      left: auto;
+      right: var(--gutter);
+      width: min(52vw, 46rem);
+      pointer-events: auto;
+    }
+
+    .dayrail__tile {
+      height: 1.15rem;
+      border-radius: var(--r-tile);
+      cursor: pointer;
+    }
+
+    .dayrail__tile[data-current] {
+      transform: translateY(-0.3rem);
+    }
+  }
+
+  /* The chapter button sits in a zero-height strip pinned to the bottom of
+     the window for as long as the story lasts. It is above the chapters, so
+     text scrolling past goes under it rather than through it. */
+  .story__dock {
+    position: sticky;
+    bottom: calc(var(--sp-4) + env(safe-area-inset-bottom));
+    z-index: 3;
+    height: 0;
+    display: none;
+    pointer-events: none;
+  }
+
+  @media (min-width: 64rem) {
+    .story__dock {
+      display: block;
+    }
+  }
+
+  .story__chapters {
+    position: absolute;
+    left: var(--gutter);
+    bottom: 0;
+    min-height: 2.5rem;
+    background: rgb(var(--c-scrim) / 0.94);
+    box-shadow: inset 0 0 0 1px var(--c-line), 0 8px 24px -14px rgb(15 44 50 / 0.5);
+    pointer-events: auto;
+  }
+
+  /* Chart and tube overlays */
+
+  .stage__overlay,
+  .stage__tube {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--dur-4) var(--ease-out), visibility 0s linear var(--dur-4), transform var(--dur-4) var(--ease-out);
+    transform: translateY(1rem);
+    pointer-events: none;
+  }
+
+  .stage__overlay {
+    top: calc(var(--masthead) + 7.5rem);
+    left: var(--gutter);
+    right: var(--gutter);
+    max-height: 44svh;
+  }
+
+  .story[data-overlay~='chart'] .stage__overlay,
+  .story[data-overlay~='tube'] .stage__tube {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity var(--dur-4) var(--ease-out), visibility 0s, transform var(--dur-4) var(--ease-out);
+  }
+
+  .stage__tube {
+    top: calc(var(--masthead) + 8rem);
+    left: var(--gutter);
+    display: grid;
+    justify-items: center;
+    gap: var(--sp-2);
+    width: 5rem;
+  }
+
+  /* On wide screens the chart stands in the lower right, under the day
+     counter and above the rail, and its plots get shorter on short windows
+     so the three never touch. */
+  @media (min-width: 64rem) {
+    .stage__overlay {
+      top: auto;
+      bottom: calc(var(--sp-5) * 2 + 1.15rem);
+      left: 50%;
+      right: var(--gutter);
+      max-height: none;
+    }
+
+    .story[data-overlay~='chart'] .stage__overlay {
+      transform: none;
+    }
+
+    .stage__overlay .fpanel__plot {
+      height: clamp(2.4rem, 11svh - 2.4rem, 5.4rem);
+    }
+
+    .stage__tube {
+      top: auto;
+      bottom: 6rem;
+      left: auto;
+      right: calc(var(--gutter) + 1rem);
+      width: 6rem;
+    }
+  }
+
+  .tube {
+    width: 3.2rem;
+    height: auto;
+  }
+
+  .tube__glass {
+    fill: var(--c-surface);
+    fill: color-mix(in srgb, var(--c-surface) 70%, transparent);
+    stroke: var(--c-line);
+    stroke-width: 1.5;
+  }
+
+  .tube__plasma {
+    fill: var(--c-plasma);
+  }
+
+  .tube__cells {
+    fill: var(--s-temp);
+  }
+
+  .tube__buffy {
+    fill: var(--c-surface);
+  }
+
+  .tube__label {
+    display: grid;
+    justify-items: center;
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+    text-align: center;
+    background: rgb(var(--c-scrim) / 0.85);
+    border-radius: var(--r-control);
+    padding: 0.2rem 0.5rem;
+  }
+
+  .tube__label strong {
+    font-size: var(--step-1);
+    color: var(--c-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Chapters */
+
+  .beats {
+    position: relative;
+    z-index: 2;
+    margin-top: -100vh;
+    margin-top: -100lvh;
+    pointer-events: none;
+  }
+
+  .no-js .beats,
+  .beats[data-static] {
+    margin-top: 0;
+  }
+
+  .beat {
+    position: relative;
+    min-height: 125svh;
+    display: grid;
+    align-items: end;
+    padding: calc(var(--masthead) + 12rem) var(--gutter) 9svh;
+  }
+
+  .beat__text {
+    pointer-events: auto;
+    min-width: 0;
+    width: 100%;
+    max-width: 32rem;
+    padding: var(--sp-5) var(--sp-5) var(--sp-5);
+    border-radius: var(--r-panel);
+    background: rgb(var(--c-scrim));
+    box-shadow: 0 0 0 1px var(--c-grout), 0 20px 50px -24px rgb(15 44 50 / 0.45);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-grout) 60%, transparent), 0 20px 50px -24px rgb(15 44 50 / 0.45);
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  @media (min-width: 64rem) {
+    .beat {
+      align-items: center;
+      padding: var(--masthead) var(--gutter) 0 max(var(--gutter), 6vw);
+    }
+
+    .beat__text {
+      max-width: 31rem;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+    }
+  }
+
+  /* Chapters with controls: on phones the controls come in a second card
+     well below the text, so the mosquito or the virus is in view above
+     them while the reader uses them. */
+  .beat--tools {
+    min-height: 185svh;
+    align-content: end;
+  }
+
+  .beat__tools {
+    pointer-events: auto;
+    min-width: 0;
+    width: 100%;
+    max-width: 32rem;
+    margin-top: 62svh;
+    padding: var(--sp-4) var(--sp-5);
+    border-radius: var(--r-panel);
+    background: rgb(var(--c-scrim));
+    box-shadow: 0 0 0 1px var(--c-grout), 0 20px 50px -24px rgb(15 44 50 / 0.45);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-grout) 60%, transparent), 0 20px 50px -24px rgb(15 44 50 / 0.45);
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  @media (min-width: 64rem) {
+    .beat--tools {
+      min-height: 125svh;
+      align-content: center;
+    }
+
+    .beat__tools {
+      max-width: 31rem;
+      margin-top: var(--sp-5);
+      padding: 0;
+      background: none;
+      box-shadow: none;
+    }
+  }
+
+  .beat__title {
+    display: grid;
+    gap: 0.55rem;
+    font-size: var(--step-3);
+    font-weight: var(--weight-display);
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+  }
+
+  .beat__day {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.3;
+    color: var(--c-ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .beat__day::before {
+    content: '';
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 2px;
+    background: var(--beat-phase, var(--c-ink-2));
+    flex: none;
+  }
+
+  .beat[data-phase='egg'] { --beat-phase: var(--ph-egg); }
+  .beat[data-phase='water'] { --beat-phase: var(--ph-water); }
+  .beat[data-phase='adult'] { --beat-phase: var(--ph-adult); }
+  .beat[data-phase='virus'] { --beat-phase: var(--ph-virus); }
+  .beat[data-phase='incubation'] { --beat-phase: var(--ph-incubation); }
+  .beat[data-phase='fever'] { --beat-phase: var(--ph-fever); }
+  .beat[data-phase='critical'] { --beat-phase: var(--ph-critical); }
+  .beat[data-phase='recovery'] { --beat-phase: var(--ph-recovery); }
+
+  .beat__text > p {
+    max-width: var(--measure);
+  }
+
+  .beat__small {
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+  }
+
+  .beat__hint {
+    font-size: var(--step--1);
+    color: var(--c-ink-3);
+  }
+
+  .no-js .beat__hint {
+    display: none;
+  }
+
+  /* "Drag to turn" with two buttons that do the same. */
+  .turn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+
+  .turn__buttons {
+    display: flex;
+    gap: var(--sp-2);
+  }
+
+  .turn__buttons .iconbtn {
+    box-shadow: inset 0 0 0 1px var(--c-line);
+  }
+
+  .beat__aside {
+    padding: var(--sp-3) var(--sp-4);
+    border-radius: var(--r-control);
+    background: var(--c-surface);
+    background: color-mix(in srgb, var(--c-water-fill) 12%, var(--c-surface));
+    font-weight: 560;
+  }
+
+  .beat__action {
+    display: grid;
+    gap: var(--sp-3);
+    justify-items: start;
+  }
+
+  .no-js .beat__action {
+    display: none;
+  }
+
+  .beat__cta {
+    margin-top: var(--sp-2);
+  }
+
+  /* Hero */
+
+  .beat--hero {
+    min-height: 100svh;
+    align-items: end;
+    padding-bottom: max(6svh, 2.5rem);
+  }
+
+  @media (min-width: 64rem) {
+    .beat--hero {
+      align-items: end;
+      padding-bottom: max(9svh, 6rem);
+    }
+  }
+
+  .beat--hero .beat__text {
+    max-width: 50rem;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    gap: var(--sp-5);
+  }
+
+  /* On phones and tablets the opening words have no card and scroll up over
+     the tub and the counter, so they carry a soft halo in the page colour. */
+  @media (max-width: 63.99rem) {
+    .beat--hero .beat__text {
+      text-shadow:
+        0 0 0.25rem rgb(var(--c-scrim) / 0.9),
+        0 0 1.1rem rgb(var(--c-scrim) / 0.85);
+    }
+  }
+
+  .hero__title {
+    font-size: var(--step-5);
+    font-weight: var(--weight-display);
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+    max-width: 10.5ch;
+  }
+
+  .hero__lede {
+    font-size: var(--step-1);
+    line-height: 1.45;
+    max-width: 31rem;
+    color: var(--c-ink);
+  }
+
+  .hero__cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--c-ink-2);
+    font-size: var(--step--1);
+    font-weight: 640;
+  }
+
+  .hero__cue .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    animation: cue 2.4s var(--ease-in-out) infinite;
+  }
+
+  @keyframes cue {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(0.3rem); }
+  }
+
+  .hero__skip {
+    font-size: var(--step--1);
+  }
+
+  /* "Then the fever breaks." */
+
+  .beat--takeover {
+    min-height: 190svh;
+    align-content: space-between;
+    align-items: start;
+    padding-top: 30svh;
+  }
+
+  .takeover {
+    position: sticky;
+    top: 28svh;
+    pointer-events: none;
+    font-size: clamp(3.2rem, 1rem + 10.5vw, 12.5rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    max-width: 9ch;
+    color: var(--c-ink);
+    text-wrap: balance;
+  }
+
+  /* On phones the fever chart shares the screen with nothing else for a
+     while: the chapter before gets this room after its card has gone. */
+  @media (max-width: 63.99rem) {
+    .js .beat--takeover {
+      padding-top: calc(var(--masthead) + 12rem + 55svh);
+    }
+  }
+
+  /* On wide screens the line stays in the left half, clear of the chart. */
+  @media (min-width: 64rem) {
+    .takeover {
+      font-size: min(12.5rem, 7.2vw);
+    }
+  }
+
+  .beat--takeover .beat__text {
+    margin-top: 40svh;
+  }
+
+  /* Wide beat for the chart */
+
+  .beat--wide .beat__text {
+    max-width: 44rem;
+  }
+
+  @media (min-width: 64rem) {
+    .beat--wide {
+      align-items: center;
+    }
+
+    .beat--wide .beat__text {
+      padding: var(--sp-6);
+      border-radius: var(--r-panel);
+      background: rgb(var(--c-scrim) / 0.97);
+      box-shadow: 0 0 0 1px var(--c-grout), 0 30px 80px -30px rgb(15 44 50 / 0.5);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-grout) 60%, transparent), 0 30px 80px -30px rgb(15 44 50 / 0.5);
+    }
+  }
+
+  .beat--alert .beat__text {
+    max-width: 36rem;
+  }
+
+  .beat--again {
+    min-height: 110svh;
+  }
+
+  /* Mosquito parts */
+
+  .parts {
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  .parts__title {
+    font-size: var(--step--1);
+    font-weight: 700;
+  }
+
+  .parts__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+
+  .parts__note {
+    min-height: 3.2em;
+    color: var(--c-ink);
+  }
+
+  .parts__list {
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  .parts__list dt {
+    font-weight: 700;
+  }
+
+  .parts__list dd {
+    color: var(--c-ink-2);
+  }
+
+  .js .parts__list {
+    display: none;
+  }
+
+  .no-js .parts__buttons,
+  .no-js .parts__note {
+    display: none;
+  }
+
+  /* Virus take-apart slider */
+
+  .explode {
+    display: grid;
+    gap: var(--sp-2);
+  }
+
+  .explode__label {
+    font-weight: 700;
+    font-size: var(--step--1);
+  }
+
+  .explode__steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-1);
+    padding: 0;
+    list-style: none;
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+  }
+
+  .explode__steps li:nth-child(2) { text-align: center; translate: -12% 0; }
+  .explode__steps li:nth-child(3) { text-align: center; translate: 12% 0; }
+  .explode__steps li:last-child { text-align: right; }
+
+  .no-js .explode {
+    display: none;
+  }
+
+  /* Lab slip: printed in monospace, like the slips from a hospital lab. */
+
+  .labslip {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    padding: var(--sp-4);
+    border-radius: var(--r-tile);
+    background: var(--c-surface);
+    color: var(--c-ink);
+    border: 1px dashed var(--c-line);
+    max-width: min(26rem, 100%);
+    overflow-x: auto;
+  }
+
+  .labslip__title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    margin-bottom: var(--sp-2);
+  }
+
+  .labslip__table {
+    width: 100%;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .labslip__table th,
+  .labslip__table td {
+    padding: 0.3rem 0.4rem;
+    text-align: right;
+    font-weight: 400;
+  }
+
+  .labslip__table th[scope='row'] {
+    text-align: left;
+  }
+
+  .labslip__table thead th {
+    border-bottom: 1px solid var(--c-line);
+    font-weight: 700;
+  }
+
+  .labslip__table tbody tr:first-child td:nth-child(4) {
+    color: var(--c-blood);
+    font-weight: 700;
+  }
+
+  /* Narrow phones: tighter slip. After the base rules, so it wins. */
+  @media (max-width: 30rem) {
+    .labslip {
+      font-size: var(--step--2);
+      padding: var(--sp-3);
+    }
+
+    .labslip__table th,
+    .labslip__table td {
+      padding: 0.25rem 0.2rem;
+    }
+  }
+
+  .labslip__note {
+    margin-top: var(--sp-2);
+    font-family: var(--font-sans);
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+  }
+
+  /* Fever chart: three panels on one day axis. */
+
+  .feverchart {
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  .feverchart__title {
+    display: grid;
+    gap: 0.1rem;
+    font-weight: 700;
+    font-size: var(--step-0);
+  }
+
+  .feverchart__note {
+    font-weight: 400;
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+  }
+
+  .feverchart__panels {
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  .fpanel {
+    display: grid;
+    gap: 0.35rem;
+    --series: var(--s-temp);
+  }
+
+  .fpanel[data-series='hct'] { --series: var(--s-hct); }
+  .fpanel[data-series='plt'] { --series: var(--s-plt); }
+
+  .fpanel__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-3);
+    font-size: var(--step--1);
+  }
+
+  .fpanel__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 640;
+  }
+
+  .fpanel__key {
+    width: 0.9rem;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--series);
+  }
+
+  .fpanel__value {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fpanel__plot {
+    position: relative;
+    height: clamp(3.4rem, 2.4rem + 3.5vw, 5.4rem);
+    --reveal: 100%;
+    --cursor: -10%;
+  }
+
+  .fpanel__svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .fpanel__band {
+    fill: var(--c-plasma-wash);
+  }
+
+  .fpanel__grid {
+    stroke: var(--c-grout);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    fill: none;
+  }
+
+  .fpanel__ref {
+    stroke: var(--c-line);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    vector-effect: non-scaling-stroke;
+    fill: none;
+  }
+
+  .fpanel__data {
+    clip-path: inset(-20% calc(100% - var(--reveal)) -20% -2%);
+  }
+
+  .fpanel__line {
+    fill: none;
+    stroke: var(--series);
+    stroke-width: 2.25;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .fpanel__ring {
+    fill: none;
+    stroke: var(--c-surface);
+    stroke-width: 12;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .fpanel__dot {
+    fill: none;
+    stroke: var(--series);
+    stroke-width: 8;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .fpanel__reflabel {
+    position: absolute;
+    right: 0;
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+    background: rgb(var(--c-scrim) / 0.9);
+    padding: 0 0.25rem;
+    border-radius: 3px;
+    translate: 0 -50%;
+  }
+
+  .fpanel__reflabel[data-ref='temp'] { top: 60%; }
+  .fpanel__reflabel[data-ref='hct'] { top: 12.5%; }
+  .fpanel__reflabel[data-ref='plt'] { top: 60%; }
+
+  .fpanel__cursor {
+    position: absolute;
+    top: -0.3rem;
+    bottom: -0.3rem;
+    left: var(--cursor);
+    width: 1.5px;
+    background: var(--c-ink);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .fpanel__range {
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+  }
+
+  .feverchart__axis {
+    display: grid;
+    gap: 0.2rem;
+    font-size: var(--step--2);
+    color: var(--c-ink-3);
+  }
+
+  .feverchart__days {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--c-ink-2);
+  }
+
+  .feverchart__days span[data-now] {
+    color: var(--c-ink);
+    font-weight: 800;
+  }
+
+  .feverchart__axislabel {
+    order: 2;
+  }
+
+  .feverchart__legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+  }
+
+  .feverchart__band {
+    width: 1rem;
+    height: 0.75rem;
+    border-radius: 2px;
+    background: var(--c-plasma-wash);
+    box-shadow: inset 0 0 0 1px var(--c-plasma);
+  }
+
+  .stage__overlay .feverchart {
+    padding: var(--sp-4) var(--sp-5);
+    border-radius: var(--r-panel);
+    background: rgb(var(--c-scrim) / 0.9);
+    box-shadow: 0 0 0 1px var(--c-grout);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-grout) 60%, transparent);
+  }
+
+  .stage__overlay .fpanel__range,
+  .stage__overlay .feverchart__note {
+    display: none;
+  }
+
+  @media (max-width: 63.99rem) {
+    .stage__overlay .fpanel__plot {
+      height: 2.6rem;
+    }
+
+    .stage__overlay .feverchart {
+      gap: var(--sp-2);
+      padding: var(--sp-3) var(--sp-4);
+    }
+
+    .stage__overlay .feverchart__legend {
+      display: none;
+    }
+  }
+
+  /* Prevention and tools */
+
+  .prevention,
+  .tools {
+    position: relative;
+    padding-block: clamp(4rem, 3rem + 5vw, 8rem) 0;
+  }
+
+  .prevention__grid {
+    margin-top: var(--sp-7);
+    display: grid;
+    gap: var(--sp-6) var(--sp-7);
+  }
+
+  @media (min-width: 56rem) {
+    .prevention__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .prevention__item {
+    display: grid;
+    align-content: start;
+    gap: var(--sp-4);
+    padding-top: var(--sp-5);
+    border-top: 3px solid var(--c-ink);
+  }
+
+  .prevention__item:nth-child(1) { border-top-color: var(--ph-water); }
+  .prevention__item:nth-child(2) { border-top-color: var(--ph-virus); }
+  .prevention__item:nth-child(3) { border-top-color: var(--ph-recovery); }
+
+  .prevention__item h3 {
+    font-size: var(--step-2);
+    letter-spacing: -0.03em;
+  }
+
+  .toolsindex {
+    margin-top: var(--sp-7);
+    display: grid;
+    border-top: 1px solid var(--c-grout);
+  }
+
+  .toolsindex__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--sp-2) var(--sp-5);
+    align-items: center;
+    padding-block: var(--sp-5);
+    border-bottom: 1px solid var(--c-grout);
+  }
+
+  .toolsindex__glyph {
+    grid-row: span 2;
+    width: clamp(3rem, 2.4rem + 2.6vw, 4.5rem);
+    aspect-ratio: 1;
+    border-radius: var(--r-control);
+    background: var(--c-surface-2);
+    background-image:
+      linear-gradient(var(--c-bg) 2px, transparent 2px),
+      linear-gradient(90deg, var(--c-bg) 2px, transparent 2px);
+    background-size: 25% 25%;
+    background-position: -1px -1px;
+    transition: background-color var(--dur-3) var(--ease-out), transform var(--dur-3) var(--ease-spring);
+  }
+
+  .toolsindex__item[data-tool='tracker'] .toolsindex__glyph { background-color: var(--ph-fever); }
+  .toolsindex__item[data-tool='testing'] .toolsindex__glyph { background-color: var(--ph-virus); }
+  .toolsindex__item[data-tool='house'] .toolsindex__glyph { background-color: var(--ph-water); }
+  .toolsindex__item[data-tool='outbreak'] .toolsindex__glyph { background-color: var(--ph-critical); }
+
+  .toolsindex__name {
+    font-size: var(--step-2);
+    letter-spacing: -0.03em;
+  }
+
+  .toolsindex__name a {
+    color: var(--c-ink);
+    text-decoration: none;
+  }
+
+  .toolsindex__name a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .toolsindex__item:hover .toolsindex__glyph {
+    transform: rotate(-6deg) scale(1.04);
+  }
+
+  .toolsindex__item:hover .toolsindex__name a {
+    text-decoration: underline;
+    text-decoration-thickness: 0.06em;
+  }
+
+  .toolsindex__blurb {
+    color: var(--c-ink-2);
+    max-width: 44rem;
+  }
+
+  @media (min-width: 56rem) {
+    .toolsindex__item {
+      grid-template-columns: auto minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+
+    .toolsindex__glyph {
+      grid-row: auto;
+    }
+  }
+
+  /* Chapters list */
+
+  .chapters {
+    display: grid;
+  }
+
+  .chapters__link {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--c-grout);
+    color: var(--c-ink);
+    text-decoration: none;
+  }
+
+  .chapters__link:hover .chapters__title {
+    text-decoration: underline;
+  }
+
+  .chapters__day {
+    font-size: var(--step--2);
+    font-weight: 700;
+    color: var(--c-ink-3);
+  }
+
+  .chapters__title {
+    font-weight: 640;
+    line-height: 1.3;
+  }
+
+  /* Reduced motion and no-JS: the story becomes a plain long article with
+     the stage as a quiet header picture. */
+
+  .no-js .stage {
+    position: relative;
+    height: 70svh;
+  }
+
+  .no-js .counter,
+  .no-js .dayrail,
+  .no-js .stage__overlay,
+  .no-js .stage__tube {
+    display: none;
+  }
+
+  .no-js .beat {
+    min-height: 0;
+    padding-block: var(--sp-7) 0;
+  }
+
+  .no-js .beat--hero {
+    margin-top: -60svh;
+    min-height: 60svh;
+  }
+
+  .no-js .takeover {
+    position: static;
+    font-size: var(--step-5);
+  }
+
+  .no-js .beat--takeover .beat__text {
+    margin-top: var(--sp-6);
+  }
+}

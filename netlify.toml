@@ -1,0 +1,13 @@
+# Pelana. Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved.
+#
+# The build writes dist/_headers (security headers, CSP, caching) and
+# dist/_redirects (language detection for the root URL), so both stay in step
+# with the hashed asset names. Nothing else needs configuring on Netlify.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--no-audit --no-fund"

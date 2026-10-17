@@ -1,0 +1,35 @@
+Pelana
+Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved.
+See LICENSE for the terms that apply to this work.
+
+Everything in this repository was written for Pelana, with the exceptions
+below. Nothing here changes the terms in LICENSE.
+
+
+Typeface
+
+Plus Jakarta Sans
+Copyright 2020 The Plus Jakarta Sans Project Authors
+(https://github.com/tokotype/PlusJakartaSans)
+Licensed under the SIL Open Font License, Version 1.1. The full licence is
+in fonts-src/OFL.txt and is published with the font files as
+assets/fonts/OFL.txt. The site serves subsets of the variable font, made by
+scripts/fonts/build-fonts.py.
+
+
+Public-domain building blocks
+
+- The integer hash in src/client/gl/glsl/common.ts uses multiplier constants
+  found with Chris Wellons' hash prospector, which he released into the
+  public domain.
+- The seeded random numbers in src/client/gl/math.ts and
+  src/client/entries/outbreak.ts follow mulberry32, a public-domain
+  generator by Tommy Ettinger.
+
+
+Facts and sources
+
+The medical and biological facts in the story and the tools come from the
+sources listed on the site's Sources page (/en/sources/ and /id/sumber/).
+Facts are not owned by anyone; the wording, the selection and the
+presentation are the Author's.

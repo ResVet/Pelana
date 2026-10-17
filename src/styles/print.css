@@ -1,0 +1,107 @@
+/* Pelana. Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved.
+ *
+ * Printing: the tracker prints a one-page summary for the doctor, the house
+ * check prints a checklist for the fridge door. Everything decorative goes.
+ */
+
+@media print {
+  @page {
+    margin: 14mm 12mm;
+  }
+
+  :root {
+    --c-bg: #ffffff;
+    --c-surface: #ffffff;
+    --c-surface-2: #f1f4f3;
+    --c-ink: #000000;
+    --c-ink-2: #222222;
+    --c-ink-3: #444444;
+    --c-grout: #bbbbbb;
+    font-size: 11pt;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .masthead,
+  .colophon__nav,
+  .skiplink,
+  .sheet,
+  .stage,
+  .export,
+  .privacy,
+  .people,
+  [data-tracker-form],
+  .house__stage,
+  .reminder,
+  .spots > .btn,
+  .btn {
+    display: none !important;
+  }
+
+  .colophon {
+    margin-top: 8mm;
+    padding: 4mm 0 0;
+    background: none;
+    border-top: 1px solid #999;
+  }
+
+  .colophon__lead .brand,
+  .colophon__about {
+    display: none;
+  }
+
+  .panel,
+  .note,
+  .alert {
+    break-inside: avoid;
+    border: 1px solid #999;
+    box-shadow: none;
+  }
+
+  .alert__head {
+    background: none;
+    color: #000;
+    border-bottom: 2px solid #000;
+  }
+
+  .tracker,
+  .house {
+    display: block;
+  }
+
+  .tracker > * + *,
+  .tracker__main > * + *,
+  .tracker__side > * + * {
+    margin-top: 6mm;
+  }
+
+  .tracker__side {
+    position: static;
+  }
+
+  .js .spotlist__text {
+    display: block;
+  }
+
+  .spotlist__check input {
+    appearance: none;
+    width: 4.5mm;
+    height: 4.5mm;
+    border: 1px solid #000;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .pagehead {
+    padding-block: 0 6mm;
+  }
+
+  .pagehead__title {
+    font-size: 22pt;
+  }
+}

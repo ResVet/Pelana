@@ -1,0 +1,126 @@
+/* Pelana. Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved. */
+
+@layer pages {
+  .textpage__body {
+    display: grid;
+    gap: var(--sp-7);
+    max-width: 48rem;
+  }
+
+  .refgroup {
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  .refgroup__title {
+    font-size: var(--step-2);
+    padding-bottom: var(--sp-3);
+    border-bottom: 1px solid var(--c-grout);
+  }
+
+  .reflist {
+    display: grid;
+    gap: var(--sp-5);
+  }
+
+  .ref {
+    display: grid;
+    gap: var(--sp-1);
+    scroll-margin-top: calc(var(--masthead) + var(--sp-5));
+  }
+
+  .ref:target {
+    padding: var(--sp-3);
+    margin: calc(-1 * var(--sp-3));
+    border-radius: var(--r-control);
+    background: var(--c-plasma-wash);
+  }
+
+  .ref__cite a {
+    color: var(--c-ink);
+    font-weight: 560;
+  }
+
+  .ref__doi {
+    font-size: var(--step--1);
+    color: var(--c-ink-3);
+  }
+
+  .ref__used {
+    font-size: var(--step--1);
+    color: var(--c-ink-2);
+  }
+
+  .textpage__foot {
+    color: var(--c-ink-3);
+    font-size: var(--step--1);
+  }
+
+  .prose {
+    display: grid;
+    gap: var(--sp-4);
+    max-width: var(--measure);
+    scroll-margin-top: calc(var(--masthead) + var(--sp-5));
+  }
+
+  .prose h2 {
+    font-size: var(--step-2);
+  }
+
+  .textpage--center {
+    min-height: 70svh;
+    display: grid;
+    align-items: center;
+  }
+
+  .notfound {
+    display: grid;
+    gap: var(--sp-5);
+    justify-items: start;
+    padding-block: var(--sp-8);
+  }
+
+  .notfound__code {
+    height: clamp(5rem, 3rem + 10vw, 10rem);
+    display: flex;
+    align-items: center;
+  }
+
+  .notfound__mosaic {
+    height: 100%;
+    width: auto;
+  }
+
+  .notfound__text {
+    font-size: clamp(5rem, 3rem + 10vw, 10rem);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    color: var(--c-water);
+  }
+
+  .notfound__code[data-mosaic-ready] .notfound__text {
+    display: none;
+  }
+
+  .page-root .rootpick {
+    min-height: 100svh;
+    display: grid;
+    place-content: center;
+    gap: var(--sp-5);
+    text-align: center;
+    padding: var(--gutter);
+  }
+
+  .page-root .rootpick h1 {
+    font-size: var(--step-5);
+    font-feature-settings: 'ss01';
+  }
+
+  .page-root .rootpick p {
+    display: flex;
+    gap: var(--sp-3);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

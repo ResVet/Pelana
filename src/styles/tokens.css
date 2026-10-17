@@ -1,0 +1,302 @@
+/* Pelana. Copyright (c) 2026 Raffa Gamadan Rifandi. All rights reserved.
+ *
+ * Design tokens. The palette comes from the subject: glazed bathroom tile
+ * (keramik), deep tub water (air bak), blood, and the pale straw of plasma.
+ * Each colour has one job. Contrast pairs were checked with WCAG 2.2 maths;
+ * the chart series passed the data-viz palette validator in both themes.
+ */
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('../../public/fonts/plus-jakarta-sans.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('../../public/fonts/plus-jakarta-sans-italic.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Arial (or Roboto on Android), resized to the web font's metrics so the swap
+   does not move the layout. Values computed by scripts/fonts/build-fonts.py. */
+@font-face {
+  font-family: 'Pelana Fallback';
+  src: local('Arial'), local('ArialMT'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('Liberation Sans');
+  size-adjust: 104.12%;
+  ascent-override: 99.69%;
+  descent-override: 21.32%;
+  line-gap-override: 0%;
+}
+
+@property --day {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: -30;
+}
+
+@property --temp {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer tokens {
+  :root {
+    color-scheme: light;
+
+    --c-bg: #e7eeec;
+    --c-surface: #f4f8f7;
+    --c-surface-2: #dce6e3;
+    --c-grout: #c5d1cd;
+    --c-line: #6e8986;
+    --c-ink: #0f2c32;
+    --c-ink-2: #3b5458;
+    --c-ink-3: #4f6a6c;
+    --c-water: #1d6a71;
+    --c-water-fill: #1d6a71;
+    --c-blood: #b0242a;
+    --c-blood-fill: #b0242a;
+    --c-blood-wash: #f3dfdd;
+    --c-plasma: #e2be55;
+    --c-plasma-wash: #f1e7c4;
+    --c-on-fill: #ffffff;
+    --c-focus: #0f2c32;
+    --c-scrim: 231 238 236;
+
+    /* Chart series: temperature, haematocrit, platelets. */
+    --s-temp: #b3262c;
+    --s-hct: #00849b;
+    --s-plt: #7a46b8;
+
+    /* Outbreak states. */
+    --st-s: #c5d1cd;
+    --st-e: #e09a14;
+    --st-i: #b3262c;
+    --st-r: #00849b;
+    --st-p: #6b3fb0;
+
+    /* Story phases on the day rail. */
+    --ph-egg: #3b5458;
+    --ph-water: #2b8a92;
+    --ph-adult: #0f2c32;
+    --ph-virus: #7a46b8;
+    --ph-incubation: #8a9e9b;
+    --ph-fever: #b3262c;
+    --ph-critical: #d9a93a;
+    --ph-recovery: #00849b;
+
+    /* Type: Plus Jakarta Sans throughout. A fluid scale on a 1.25 ratio at
+       phone width that opens up to about 1.333 on a wide screen. */
+    --font-sans: 'Plus Jakarta Sans', 'Pelana Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+
+    --step--2: 0.78rem;
+    --step--1: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
+    --step-0: clamp(1.02rem, 0.98rem + 0.22vw, 1.15rem);
+    --step-1: clamp(1.22rem, 1.13rem + 0.45vw, 1.5rem);
+    --step-2: clamp(1.45rem, 1.27rem + 0.9vw, 2rem);
+    --step-3: clamp(1.8rem, 1.45rem + 1.75vw, 2.9rem);
+    --step-4: clamp(2.3rem, 1.6rem + 3.4vw, 4.6rem);
+    --step-5: clamp(2.8rem, 1.4rem + 6.6vw, 8rem);
+
+    --weight-text: 420;
+    --weight-strong: 640;
+    --weight-head: 760;
+    --weight-display: 790;
+
+    --leading-text: 1.62;
+    --leading-tight: 1.08;
+    --measure: 36rem;
+
+    /* Space on a 4px base. */
+    --sp-1: 0.25rem;
+    --sp-2: 0.5rem;
+    --sp-3: 0.75rem;
+    --sp-4: 1rem;
+    --sp-5: 1.5rem;
+    --sp-6: 2rem;
+    --sp-7: 3rem;
+    --sp-8: 4rem;
+    --sp-9: 6rem;
+    --sp-10: 8rem;
+
+    --gutter: clamp(1rem, 0.6rem + 2vw, 2.25rem);
+    --wrap: 76rem;
+    --masthead: 3.75rem;
+
+    /* Radii follow the object: tiles are nearly square-cornered, controls a
+       little softer, sheets softer still. */
+    --r-tile: 3px;
+    --r-control: 10px;
+    --r-panel: 14px;
+    --r-sheet: 22px;
+
+    /* Motion. Custom curves; nothing linear. */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --dur-1: 120ms;
+    --dur-2: 220ms;
+    --dur-3: 420ms;
+    --dur-4: 760ms;
+
+    --shadow-sheet: 0 -1px 0 rgb(15 44 50 / 0.06), 0 24px 60px -20px rgb(15 44 50 / 0.35);
+    --shadow-pop: 0 1px 0 rgb(15 44 50 / 0.05), 0 12px 32px -14px rgb(15 44 50 / 0.4);
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --c-bg: #0b1d21;
+    --c-surface: #12292e;
+    --c-surface-2: #183338;
+    --c-grout: #234046;
+    --c-line: #5f7f82;
+    --c-ink: #dce9e6;
+    --c-ink-2: #9db5b2;
+    --c-ink-3: #8aa5a2;
+    --c-water: #6cc1c6;
+    --c-water-fill: #6cc1c6;
+    --c-blood: #ff7068;
+    --c-blood-fill: #ff7068;
+    --c-blood-wash: #3a1c1f;
+    --c-plasma: #e9c96a;
+    --c-plasma-wash: #33301c;
+    --c-on-fill: #0b1d21;
+    --c-focus: #dce9e6;
+    --c-scrim: 11 29 33;
+    --s-temp: #e8554e;
+    --s-hct: #1aa3aa;
+    --s-plt: #9a80e6;
+    --st-s: #2c4a4f;
+    --st-e: #e9c96a;
+    --st-i: #e8554e;
+    --st-r: #1aa3aa;
+    --st-p: #9a80e6;
+    --ph-egg: #8aa5a2;
+    --ph-water: #4fb3ba;
+    --ph-adult: #dce9e6;
+    --ph-virus: #9a80e6;
+    --ph-incubation: #5f7f82;
+    --ph-fever: #e8554e;
+    --ph-critical: #e9c96a;
+    --ph-recovery: #1aa3aa;
+    --weight-text: 400;
+    --shadow-sheet: 0 -1px 0 rgb(0 0 0 / 0.4), 0 24px 60px -20px rgb(0 0 0 / 0.7);
+    --shadow-pop: 0 12px 32px -14px rgb(0 0 0 / 0.75);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      color-scheme: dark;
+      --c-bg: #0b1d21;
+      --c-surface: #12292e;
+      --c-surface-2: #183338;
+      --c-grout: #234046;
+      --c-line: #5f7f82;
+      --c-ink: #dce9e6;
+      --c-ink-2: #9db5b2;
+      --c-ink-3: #8aa5a2;
+      --c-water: #6cc1c6;
+      --c-water-fill: #6cc1c6;
+      --c-blood: #ff7068;
+      --c-blood-fill: #ff7068;
+      --c-blood-wash: #3a1c1f;
+      --c-plasma: #e9c96a;
+      --c-plasma-wash: #33301c;
+      --c-on-fill: #0b1d21;
+      --c-focus: #dce9e6;
+      --c-scrim: 11 29 33;
+      --s-temp: #e8554e;
+      --s-hct: #1aa3aa;
+      --s-plt: #9a80e6;
+      --st-s: #2c4a4f;
+      --st-e: #e9c96a;
+      --st-i: #e8554e;
+      --st-r: #1aa3aa;
+      --st-p: #9a80e6;
+      --ph-egg: #8aa5a2;
+      --ph-water: #4fb3ba;
+      --ph-adult: #dce9e6;
+      --ph-virus: #9a80e6;
+      --ph-incubation: #5f7f82;
+      --ph-fever: #e8554e;
+      --ph-critical: #e9c96a;
+      --ph-recovery: #1aa3aa;
+      --weight-text: 400;
+      --shadow-sheet: 0 -1px 0 rgb(0 0 0 / 0.4), 0 24px 60px -20px rgb(0 0 0 / 0.7);
+      --shadow-pop: 0 12px 32px -14px rgb(0 0 0 / 0.75);
+    }
+  }
+
+  /* High contrast: pure black on white (or the reverse), every secondary
+     ink promoted to primary, lines darkened. */
+  :root[data-contrast='high'] {
+    --c-bg: #ffffff;
+    --c-surface: #ffffff;
+    --c-surface-2: #eef2f1;
+    --c-grout: #5c6f6c;
+    --c-line: #1b2a2c;
+    --c-ink: #000000;
+    --c-ink-2: #0b1517;
+    --c-ink-3: #1b2a2c;
+    --c-water: #00525a;
+    --c-water-fill: #00525a;
+    --c-blood: #8f0f15;
+    --c-blood-fill: #8f0f15;
+    --c-focus: #000000;
+    --c-scrim: 255 255 255;
+  }
+
+  :root[data-contrast='high'][data-theme='dark'] {
+    --c-bg: #000000;
+    --c-surface: #000000;
+    --c-surface-2: #0d1a1c;
+    --c-grout: #8aa5a2;
+    --c-line: #e6f0ee;
+    --c-ink: #ffffff;
+    --c-ink-2: #f2f7f6;
+    --c-ink-3: #dfe9e7;
+    --c-water: #8be3e8;
+    --c-water-fill: #8be3e8;
+    --c-blood: #ff9c95;
+    --c-blood-fill: #ff9c95;
+    --c-on-fill: #000000;
+    --c-focus: #ffffff;
+    --c-scrim: 0 0 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root[data-contrast='high']:not([data-theme='light']) {
+      --c-bg: #000000;
+      --c-surface: #000000;
+      --c-surface-2: #0d1a1c;
+      --c-grout: #8aa5a2;
+      --c-line: #e6f0ee;
+      --c-ink: #ffffff;
+      --c-ink-2: #f2f7f6;
+      --c-ink-3: #dfe9e7;
+      --c-water: #8be3e8;
+      --c-water-fill: #8be3e8;
+      --c-blood: #ff9c95;
+      --c-blood-fill: #ff9c95;
+      --c-on-fill: #000000;
+      --c-focus: #ffffff;
+      --c-scrim: 0 0 0;
+    }
+  }
+
+  /* Text size setting. Read by the html rule in the base layer, which would
+     otherwise win over a font-size set here in the earlier tokens layer. */
+  :root[data-text='large'] {
+    --root-size: 112.5%;
+  }
+
+  :root[data-text='larger'] {
+    --root-size: 125%;
+  }
+}
